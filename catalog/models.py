@@ -15,14 +15,17 @@ class Book(models.Model):
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     summary = models.TextField(max_length=1000, help_text="Enter a brief description of the book")
     isbn = models.CharField('ISBN', max_length=13,
-                            help_text='13 Charactor <a href="https://www.isbn-international.com"></a>')
+                            help_text='13 Character <a href="https://www.isbn-international.com"></a>')
     genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('book-detail', args=[str(self.id)])
+        return reverse('catalog:book-detail', args=[str(self.id)])
+
+    def display_genre(self):
+        return ', '.join([genre.name for genre in self.genre.all()])
 
 
 class BookInstance(models.Model):
@@ -57,4 +60,4 @@ class Author(models.Model):
         return '%s %s' % (self.first_name, self.last_name)
 
     def get_absolute_url(self):
-        return reverse('author-detail', args=[str(self.id)])
+        return reverse('catalog:author-detail', args=[str(self.id)])
