@@ -69,4 +69,4 @@ class Author(models.Model):
         return '%s %s' % (self.first_name, self.last_name)
 
     def get_absolute_url(self):
-        return reverse('catalog:author-detail', args=[str(self.id)])
+        return reverse('catalog:author_detail', args=[str(self.id)])
